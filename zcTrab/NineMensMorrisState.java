@@ -2,6 +2,7 @@ package aimaDaniel.trilha.zcTrab;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class NineMensMorrisState implements Cloneable{
     static public final int NUM_PIECES_PER_PLAYER = 9;
@@ -43,7 +44,7 @@ public class NineMensMorrisState implements Cloneable{
 		NineMensMorrisState copy = null;
 		try {
 			copy = (NineMensMorrisState) super.clone();
-			copy.gameBoard = (Board) this.gameBoard.clone();
+			copy.gameBoard = (Board) gameBoard.clone();
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace(); // should never happen...
 		}
@@ -329,5 +330,29 @@ public class NineMensMorrisState implements Cloneable{
 			System.exit(-1);
 		}
 		return true;
+	}
+
+	@Override
+	public boolean equals(Object anObj) {
+		if (anObj != null && anObj.getClass() == getClass()) {
+			NineMensMorrisState anotherState = (NineMensMorrisState) anObj;
+			for (int i = 0; i < Board.NUM_POSITIONS_OF_BOARD; i++) {
+				try {
+					if (!Objects.equals(gameBoard.getPosition(i), anotherState.gameBoard.getPosition(i)))
+						return false;
+				} catch (GameException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		// Need to ensure equal objects have equivalent hashcodes (Issue 77).
+		return toString().hashCode();
 	}
 }

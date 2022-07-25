@@ -18,4 +18,9 @@ public class Move {
 		this.removePieceOnIndex = remove;
 		this.typeOfMove = type;
 	}
+
+	@Override
+	public String toString() {
+		return "Move("+srcIndex+","+destIndex+","+removePieceOnIndex+","+typeOfMove+")";
+	}
 }

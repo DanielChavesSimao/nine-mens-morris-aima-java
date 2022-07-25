@@ -1,5 +1,7 @@
 package aimaDaniel.trilha.zcTrab;
 
+import java.util.Objects;
+
 public class Board implements Cloneable{
     static public final int NUM_POSITIONS_OF_BOARD = 24;
 	static public final int NUM_MILL_COMBINATIONS = 16;
@@ -25,6 +27,23 @@ public class Board implements Cloneable{
 		Board copy = null;
 		try {
 			copy = (Board) super.clone();
+			copy.boardPositions = new Position[Board.NUM_POSITIONS_OF_BOARD];
+			int i = 0;
+			for (Position position : boardPositions) {
+				copy.boardPositions[i] = (Position) position.clone();
+				i++;
+			}
+			i = 0;
+			int j = 0;
+			copy.millCombinations = new Position[Board.NUM_MILL_COMBINATIONS][Board.NUM_POSITIONS_IN_EACH_MILL];
+			for (Position[] millCombination : millCombinations) {
+				for (Position position : millCombination) {
+					copy.millCombinations[i][j] = (Position) position.clone();
+					j++;
+				}
+				j=0;
+				i++;
+			}
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace(); // should never happen...
 		}
@@ -191,6 +210,23 @@ public class Board implements Cloneable{
 		millCombinations[15][2] = boardPositions[22];
 	}
 
+	@Override
+	public String toString() {
+		return showPos(0)+" - - - - - "+showPos(1)+" - - - - - "+showPos(2)+"\n"+
+		"|           |           |"+"\n"+
+		"|     "+showPos(3)+" - - "+showPos(4)+" - - "+showPos(5)+"     |"+"\n"+
+		"|           |           |"+"\n"+
+		"|     | "+showPos(6)+" - "+showPos(7)+" - "+showPos(8)+" |     |" +"\n"+
+		"|           |           |"+"\n"+
+		showPos(9)+" - - "+showPos(10)+"-"+showPos(11)+"       "+showPos(12)+"-"+showPos(13)+" - - "+showPos(14)+"\n"+
+		"|           |           |"+"\n"+
+		"|     | "+showPos(15)+" - "+showPos(16)+" - "+showPos(17)+" |     |" +"\n"+
+		"|           |           |"+"\n"+
+		"|     "+showPos(18)+" - - "+showPos(19)+" - - "+showPos(20)+"     |"+"\n"+
+		"|           |           |"+"\n"+
+		showPos(21)+" - - - - - "+showPos(22)+" - - - - - "+showPos(23);
+	}
+
 	public void printBoard() {
 		System.out.println(showPos(0)+" - - - - - "+showPos(1)+" - - - - - "+showPos(2));
 		System.out.println("|           |           |");
@@ -222,5 +258,29 @@ public class Board implements Cloneable{
 
 	public int getNumTotalPiecesPlaced() {
 		return numberOfTotalPiecesPlaced;
+	}
+
+	@Override
+	public boolean equals(Object anObj) {
+		if (anObj != null && anObj.getClass() == getClass()) {
+			Board anotherBoard = (Board) anObj;
+			for (int i = 0; i < Board.NUM_POSITIONS_OF_BOARD; i++) {
+				try {
+					if (!Objects.equals(getPosition(i), anotherBoard.getPosition(i)))
+						return false;
+				} catch (GameException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		// Need to ensure equal objects have equivalent hashcodes (Issue 77).
+		return toString().hashCode();
 	}
 }

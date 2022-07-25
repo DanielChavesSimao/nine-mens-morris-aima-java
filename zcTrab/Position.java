@@ -1,6 +1,6 @@
 package aimaDaniel.trilha.zcTrab;
 
-public class Position {
+public class Position implements Cloneable{
     private boolean isOccupied;
 	private int positionIndex;
 	private Token playerOccupying;
@@ -10,6 +10,17 @@ public class Position {
 		isOccupied = false;
 		this.positionIndex = position;
 		playerOccupying = Token.NO_PLAYER;
+	}
+
+	@Override
+	public Position clone() {
+		Position copy = null;
+		try {
+			copy = (Position) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace(); // should never happen...
+		}
+		return copy;
 	}
 
     public boolean isOccupied() {
