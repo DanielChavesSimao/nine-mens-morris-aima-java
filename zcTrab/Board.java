@@ -112,6 +112,16 @@ public class Board implements Cloneable{
 		}
 	}
 
+	public int getNPiecesPlayer(Token player) {
+		if(player == Token.PLAYER_1) {
+			return numOfPiecesP1;
+		} else if (player == Token.PLAYER_2) {
+			return numOfPiecesP2;
+		} else {
+			return 0;
+		}
+	}
+
     private void initBoard() {
 		for(int i = 0; i < Board.NUM_POSITIONS_OF_BOARD; i++) {
 			boardPositions[i] = new Position(i);
