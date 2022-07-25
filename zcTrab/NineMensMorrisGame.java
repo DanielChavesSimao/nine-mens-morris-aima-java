@@ -38,18 +38,18 @@ public class NineMensMorrisGame implements Game<NineMensMorrisState, Move, Token
 
     @Override
     public boolean isTerminal(NineMensMorrisState state) {
-        // return state.getUtility() != -1;
+        return state.getUtility() != -1;
     }
 
     @Override
     public double getUtility(NineMensMorrisState state, Token player) {
-        // double result = state.getUtility();
-        // if (result != -1) {
-        //     if (Objects.equals(player, Token.PLAYER_2))
-        //         result = 1 - result;
-        // } else {
-        //     throw new IllegalArgumentException("Estado não terminal.");
-        // }
-        // return result;
+        double result = state.getUtility();
+        if (result != -1) {
+            if (Objects.equals(player, Token.PLAYER_2))
+                result = 1 - result;
+        } else {
+            throw new IllegalArgumentException("Estado não terminal.");
+        }
+        return result;
     }
 }

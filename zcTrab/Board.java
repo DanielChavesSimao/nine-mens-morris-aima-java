@@ -1,6 +1,6 @@
 package aimaDaniel.trilha.zcTrab;
 
-public class Board {
+public class Board implements Cloneable{
     static public final int NUM_POSITIONS_OF_BOARD = 24;
 	static public final int NUM_MILL_COMBINATIONS = 16;
 	static public final int NUM_POSITIONS_IN_EACH_MILL = 3;
@@ -19,6 +19,17 @@ public class Board {
         initBoard();
 		initMillCombinations();
     }
+
+	@Override
+	public Board clone() {
+		Board copy = null;
+		try {
+			copy = (Board) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace(); // should never happen...
+		}
+		return copy;
+	}
 
 	public Position getPosition(int posIndex) throws GameException {
 		if(posIndex >= 0 && posIndex < Board.NUM_POSITIONS_OF_BOARD) {

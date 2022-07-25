@@ -43,30 +43,35 @@ public class NineMensMorrisState implements Cloneable{
 		NineMensMorrisState copy = null;
 		try {
 			copy = (NineMensMorrisState) super.clone();
+			copy.gameBoard = (Board) this.gameBoard.clone();
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace(); // should never happen...
 		}
 		return copy;
 	}
 
-	public void applyMove(Move move) throws GameException{
-		Token opponent = getPlayerToMove() == Token.PLAYER_1 ? Token.PLAYER_2 : Token.PLAYER_1;
-		Position position = getGameBoard().getPosition(move.destIndex);
-		position.setAsOccupied(getPlayerToMove());
+	public void applyMove(Move move) {
+		try{
+			Token opponent = getPlayerToMove() == Token.PLAYER_1 ? Token.PLAYER_2 : Token.PLAYER_1;
+			Position position = getGameBoard().getPosition(move.destIndex);
+			position.setAsOccupied(getPlayerToMove());
 
-		if (getCurrentGamePhase() == PLACING_PHASE) {
-			getGameBoard().incNumPiecesOfPlayer(getPlayerToMove());
-		} else {
-			getGameBoard().getPosition(move.srcIndex).setAsUnoccupied();
+			if (getCurrentGamePhase() == PLACING_PHASE) {
+				getGameBoard().incNumPiecesOfPlayer(getPlayerToMove());
+			} else {
+				getGameBoard().getPosition(move.srcIndex).setAsUnoccupied();
+			}
+
+			if (move.removePieceOnIndex != -1) {
+				Position removed = getGameBoard().getPosition(move.removePieceOnIndex);
+				removed.setAsUnoccupied();
+				getGameBoard().decNumPiecesOfPlayer(opponent);
+			}
+
+			playerToMove = opponent;
+		} catch (GameException e) {
+			e.printStackTrace();
 		}
-
-		if (move.removePieceOnIndex != -1) {
-			Position removed = getGameBoard().getPosition(move.removePieceOnIndex);
-			removed.setAsUnoccupied();
-			getGameBoard().decNumPiecesOfPlayer(opponent);
-		}
-
-		playerToMove = opponent;
 	}
 
 	private void checkMove(Board gameBoard, Token player, List<Move> moves, Move move) throws GameException {
