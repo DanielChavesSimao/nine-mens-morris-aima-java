@@ -203,6 +203,10 @@ public class NineMensMorrisState implements Cloneable{
 		return Token.NO_PLAYER;
 	}
 
+	public int getNumPiecesPlayer(Token player) {
+        return getGameBoard().getNPiecesPlayer(player);
+    }
+
     public boolean positionIsAvailable(int boardIndex) throws GameException {
         return gameBoard.positionIsAvailable(boardIndex);
 	}

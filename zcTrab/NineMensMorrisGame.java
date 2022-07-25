@@ -52,4 +52,17 @@ public class NineMensMorrisGame implements Game<NineMensMorrisState, Move, Token
         }
         return result;
     }
+
+    @Override
+    public int getGamePhase(NineMensMorrisState state){
+       
+        return state.getCurrentGamePhase();
+    }
+    
+    @Override
+    public int getNumPiecesPlayer(NineMensMorrisState state, Token player){
+       
+        return state.getNumPiecesPlayer(player);
+    }
+    
 }
