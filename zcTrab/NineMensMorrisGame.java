@@ -1,4 +1,4 @@
-package aimaDaniel.trilha.zcTrab;
+package trilha.zcTrab;
 
 import java.util.List;
 import java.util.Objects;
@@ -60,9 +60,17 @@ public class NineMensMorrisGame implements Game<NineMensMorrisState, Move, Token
     }
     
     @Override
-    public int getNumPiecesPlayer(NineMensMorrisState state, Token player){
+    public double euristics(NineMensMorrisState state){
        
-        return state.getNumPiecesPlayer(player);
+        Token player_1 = Token.PLAYER_1;
+        Token player_2 = Token.PLAYER_2;
+        
+        int peca_1 = 0, peca_2 = 0;
+
+        peca_1 = state.getNumPiecesPlayer(player_1);
+        peca_2 = state.getNumPiecesPlayer(player_2);
+        
+        return 1-((Math.abs(peca_1 - peca_2))/9);
     }
     
 }

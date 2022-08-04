@@ -212,14 +212,22 @@ public class IterativeDeepeningAlphaBetaSearch<S, A, P> implements AdversarialSe
         } else {
          
             int gamephase = game.getGamePhase(state);
-            int numpieces = game.getNumPiecesPlayer(state, player);
+            double euristica = game.euristics(state);
+            double phasetest = 1.1;
             
-            System.out.println("heuristica\ngamephase:"+gamephase+"     numpieces:"+numpieces);
+            //euristica = 1 - abs(peças_player1 - peças_player2) / 9
+            
+            if(gamephase == 1){
+                phasetest = 2.5;
+            } else {
+                phasetest = gamephase * 1.1;
+            }
+            
+            System.out.println("heuristica\ngamephase:"+gamephase+"     euristica:"+euristica/phasetest);
             
             heuristicEvaluationUsed = true;
-            //Utilidade dos nós não terminais utilizando em consideração a fase de jogo em que a 
-            //partida esta e o numero de peças dos jogadores
-            return gamephase*numpieces*((utilMin + utilMax) / gamephase);
+            //Utilidade dos nós não terminais
+            return euristica/phasetest;
         }
     }
 
