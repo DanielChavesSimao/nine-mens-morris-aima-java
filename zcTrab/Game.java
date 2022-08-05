@@ -49,9 +49,7 @@ public interface Game<S, A, P> {
 
     double getUtility(S state, P player);
     
-    //Para a função heuristica
-
     int getGamePhase(S state);
     
-    int getNumPiecesPlayer(S state, P player);
+    double euristics(S state);
 }
