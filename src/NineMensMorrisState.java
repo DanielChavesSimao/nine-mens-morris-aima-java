@@ -53,7 +53,10 @@ public class NineMensMorrisState implements Cloneable{
 		try{
 			Token opponent = getPlayerToMove() == Token.PLAYER_1 ? Token.PLAYER_2 : Token.PLAYER_1;
 			Position position = getGameBoard().getPosition(move.destIndex);
-			position.setAsOccupied(getPlayerToMove());
+			
+			if (!position.isOccupied()) {
+				position.setAsOccupied(getPlayerToMove());				
+			}
 
 			if (getCurrentGamePhase() == PLACING_PHASE) {
 				getGameBoard().incNumPiecesOfPlayer(getPlayerToMove());

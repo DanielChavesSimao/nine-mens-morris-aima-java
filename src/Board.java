@@ -26,22 +26,11 @@ public class Board implements Cloneable{
 		try {
 			copy = (Board) super.clone();
 			copy.boardPositions = new Position[Board.NUM_POSITIONS_OF_BOARD];
-			int i = 0;
-			for (Position position : boardPositions) {
-				copy.boardPositions[i] = (Position) position.clone();
-				i++;
+			for (int i = 0; i < Board.NUM_POSITIONS_OF_BOARD; i++) {
+				copy.boardPositions[i] = (Position) boardPositions[i].clone();
 			}
-			i = 0;
-			int j = 0;
-			copy.millCombinations = new Position[Board.NUM_MILL_COMBINATIONS][Board.NUM_POSITIONS_IN_EACH_MILL];
-			for (Position[] millCombination : millCombinations) {
-				for (Position position : millCombination) {
-					copy.millCombinations[i][j] = (Position) position.clone();
-					j++;
-				}
-				j=0;
-				i++;
-			}
+
+			copy.initMillCombinations();
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace(); // should never happen...
 		}

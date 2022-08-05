@@ -51,14 +51,14 @@ public class NineMensMorrisGame implements Game<NineMensMorrisState, Move, Token
         return result;
     }
 
-    @Override
+    
     public int getGamePhase(NineMensMorrisState state){
        
         return state.getCurrentGamePhase();
     }
     
-    @Override
-    public double euristics(NineMensMorrisState state){
+    
+    public double heuristics(NineMensMorrisState state){
        
         Token player_1 = Token.PLAYER_1;
         Token player_2 = Token.PLAYER_2;

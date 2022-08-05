@@ -63,16 +63,19 @@ public class Main {
 
     private static NineMensMorrisState userPlay(NineMensMorrisGame game, NineMensMorrisState state) throws GameException {
         int x,y;
+        NineMensMorrisState dummyState = state.clone();
         if (state.getCurrentGamePhase() == NineMensMorrisState.PLACING_PHASE) {
             System.out.println("Selecione uma posicao");
             x = readNum2();
             Move uaction = new Move(-7, x, -1, Move.PLACING);
-            state = game.getResult(state,uaction);            
-            if (state.madeAMill(x, Token.PLAYER_2)) {
+            dummyState = game.getResult(state,uaction);
+            if (dummyState.madeAMill(x, Token.PLAYER_2)) {
                 System.out.println("Selecione uma peca para remover");
-                x = readNum2();
-                Move removeAction = new Move(-7, -1, x, Move.REMOVING);
+                y = readNum2();
+                Move removeAction = new Move(-7, x, y, Move.REMOVING);
                 state = game.getResult(state, removeAction);
+            } else {
+                state = dummyState;
             }
         } else {
             System.out.println("Selecione uma peca pra mover");
