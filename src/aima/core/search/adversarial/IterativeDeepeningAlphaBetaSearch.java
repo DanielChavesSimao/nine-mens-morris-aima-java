@@ -20,6 +20,7 @@ public class IterativeDeepeningAlphaBetaSearch<S, A, P> implements AdversarialSe
 
     public final static String METRICS_NODES_EXPANDED = "nodesExpanded";
     public final static String METRICS_MAX_DEPTH = "maxDepth";
+    public static final int SEARCH_DEPTH = 7;
 
     protected Game<S, A, P> game;
     protected double utilMax;
@@ -116,7 +117,7 @@ public class IterativeDeepeningAlphaBetaSearch<S, A, P> implements AdversarialSe
                         break; // exit from iterative deepening loop
                 }
             }
-        } while (!timer.timeOutOccurred() && heuristicEvaluationUsed && currDepthLimit < depthLimit);
+        } while (!timer.timeOutOccurred() && heuristicEvaluationUsed && currDepthLimit < depthLimit && currDepthLimit < SEARCH_DEPTH);
         return results.get(0);
     }
 
@@ -207,8 +208,19 @@ public class IterativeDeepeningAlphaBetaSearch<S, A, P> implements AdversarialSe
         if (game.isTerminal(state)) {
             return game.getUtility(state, player);
         } else {
+            int gamephase = game.getGamePhase(state);
+            
+            double heuristic = game.heuristics(state);
+            double phasetest = 1.1;
+            if(gamephase == 1){
+                phasetest = 2.5;
+            } else {
+                phasetest = gamephase * 1.1;
+            }
+
+            // System.out.println("heuristica\ngamephase:"+gamephase+"     heuristic:"+heuristic/phasetest);
             heuristicEvaluationUsed = true;
-            return (utilMin + utilMax) / 2;
+            return heuristic/phasetest;
         }
     }
 
