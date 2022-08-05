@@ -46,6 +46,7 @@ public class Main {
             IterativeDeepeningAlphaBetaSearch<NineMensMorrisState, Move, Token> search = IterativeDeepeningAlphaBetaSearch.createFor(game,0.0,1.0,10);
             // search.setLogEnabled(true);
             while (!(game.isTerminal(currState))) {
+                System.out.println("Utilidade:" + currState.getUtility());
                 System.out.println(game.getPlayer(currState) + " bolando a play...");
                 Move action = search.makeDecision(currState);
                 currState = game.getResult(currState, action);
